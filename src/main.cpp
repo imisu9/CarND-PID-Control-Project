@@ -33,7 +33,7 @@ string hasData(string s) {
 int main() {
   uWS::Hub h;
 
-  PID pid(0, 0, 0);
+  PID pid(0.0, 0.0, 0.0);
   /**
    * TODO: Initialize the pid variable.
    */
@@ -67,7 +67,7 @@ int main() {
           steer_value = -pid.TotalError();
           if (steer_value > 1) {
             steer_value = 1;
-          } else if (steer_valeu < -1) {
+          } else if (steer_value < -1) {
             steer_value = -1;
           }
           
