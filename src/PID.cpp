@@ -12,15 +12,15 @@ void PID::Init(double Kp_, double Ki_, double Kd_) {
   /**
    * TODO: Initialize PID coefficients (and errors, if needed)
    */
-  this->Kp = Kp_;
-  this->Ki = Ki_;
-  this->Kd = Kd_;
+  Kp = Kp_;
+  Ki = Ki_;
+  Kd = Kd_;
   
   // Need to figure out how to implement "if needed"
   if (true) {
-    this->p_error = 0.0;
-    this->i_error = 0.0;
-    this->d_error = 0.0;
+    p_error = 0.0;
+    i_error = 0.0;
+    d_error = 0.0;
   }
 }
 
@@ -28,7 +28,9 @@ void PID::UpdateError(double cte) {
   /**
    * TODO: Update PID errors based on cte.
    */
-
+  d_error = cte - p_error;
+  p_error = cte;
+  i_error += cte;
 }
 
 double PID::TotalError() {
