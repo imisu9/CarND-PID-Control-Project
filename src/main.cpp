@@ -81,58 +81,58 @@ int main() {
             // Proportional
             best_error = 100.0;
             
-            Kp += dKp;            
+            pid.Kp += dKp;            
             curr_error = pid.TotalError();
             if (curr_error < best_error) {
               best_error = curr_error;
               dKp *= 1.1;
             } else {
               // Move to the opposite direction
-              Kp -= 2*dKp;
+              pid.Kp -= 2*dKp;
               curr_error = pid.TotalError();
               if (curr_error < best_error) {
                 best_error = curr_error;
                 dKp *= 1.1;
               } else {
-                Kp += dKp;
+                pid.Kp += dKp;
                 dKp *= 0.9;
               }
             }
             
             // Integral            
-            Ki += dKi;
+            pid.Ki += dKi;
             curr_error = pid.TotalError();
             if (curr_error < best_error) {
               best_error = curr_error;
               dKi *= 1.1;
             } else {
               // Move to the opposite direction
-              Ki -= 2*dKi;
+              pid.Ki -= 2*dKi;
               curr_error = pid.TotalError();
               if (curr_error < best_error) {
                 best_error = curr_error;
                 dKi *= 1.1;
               } else {
-                Ki += dKi;
+                pid.Ki += dKi;
                 dKi *= 0.9;
               }
             }
             
             // Differential            
-            Kd += dKd;
+            pid.Kd += dKd;
             curr_error = pid.TotalError();
             if (curr_error < best_error) {
               best_error = curr_error;
               dKd *= 1.1;
             } else {
               // Move to the opposite direction
-              Kd -= 2*dKd;
+              pid.Kd -= 2*dKd;
               curr_error = pid.TotalError();
               if (curr_error < best_error) {
                 best_error = curr_error;
                 dKd *= 1.1;
               } else {
-                Kd += dKd;
+                pid.Kd += dKd;
                 dKd *= 0.9;
               }
             }
