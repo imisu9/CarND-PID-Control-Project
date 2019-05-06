@@ -33,23 +33,6 @@ class PID {
 
  private:
   /**
-   * Calculate best error using twiddle
-   */
-  double Twiddle();
- 
-  /**
-   * Run N (=100) times to get error
-   */
-  double PID::Run()
-   
-  /**
-   * Move the robot
-   * steering = front wheel angle, limited by max_steering_angle
-   * distance = total distance driven, most be non-negative
-   */
-  double PID::Move()
- 
-  /**
    * PID Errors
    */
   double p_error;
