@@ -66,6 +66,8 @@ int main() {
            */
           pid.UpdateError(cte);
           steer_value = -pid.TotalError();
+          std::cout << "Steering Value before bounding: " << steer_value 
+                    << std::endl;
           if (steer_value > 1) {
             steer_value = 1;
           } else if (steer_value < -1) {
