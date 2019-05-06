@@ -43,15 +43,18 @@ double PID::TotalError() {
   double tolerance = 0.2; // initialized as shown in the class
   double best_error;
   double curr_error;
-  //int iteration = 1;
+  int iteration = 1;
   
   /**
    * TODO: Calculate and return the total error
    */
   best_error = Kp*p_error + Ki*i_error + Kd*d_error;
   while ((dKp+dKi+dKd) > tolerance) {
-    //std::cout << "Iteration: " << iteration
-    //          < " best_error: " << best_error << std::endl;
+    std::cout << "Iteration: " << iteration
+              << " best_error: " << best_error << std::endl;
+    std::cout << "Kp: " << Kp
+              << " Ki: " << Ki
+              << " Kd: " << Kd << std::endl;
     // Proportional
     Kp += dKp;
     curr_error = Kp*p_error + Ki*i_error + Kd*d_error;
@@ -108,6 +111,8 @@ double PID::TotalError() {
         dKd *= 0.9;
       }
     }
+    
+    iteration += 1;
   }
   return best_error;
 }
