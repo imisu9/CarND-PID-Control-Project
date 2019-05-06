@@ -64,8 +64,83 @@ int main() {
            * NOTE: Feel free to play around with the throttle and speed.
            *   Maybe use another PID controller to control the speed!
            */
-          pid.UpdateError(cte);
-          steer_value = -pid.TotalError();
+          double dKp = 1.0;
+          double dKi = 1.0;
+          double dKd = 1.0;
+          double tolerance = 0.2;
+          int iteration = 1;
+          double best_error;
+          double curr_error;
+          
+          while ((dKp+dKi+dKd) > tolerance) {
+            std::cout << "Iteration: " << iteration 
+                      << " best_error: " << best_error << std::endl;
+            
+            pid.UpdateError(cte);
+            
+            // Proportional
+            best_error = 100.0;
+            
+            Kp += dKp;            
+            curr_error = pid.TotalError();
+            if (curr_error < best_error) {
+              best_error = curr_error;
+              dKp *= 1.1;
+            } else {
+              // Move to the opposite direction
+              Kp -= 2*dKp;
+              curr_error = pid.TotalError();
+              if (curr_error < best_error) {
+                best_error = curr_error;
+                dKp *= 1.1;
+              } else {
+                Kp += dKp;
+                dKp *= 0.9;
+              }
+            }
+            
+            // Integral            
+            Ki += dKi;
+            curr_error = pid.TotalError();
+            if (curr_error < best_error) {
+              best_error = curr_error;
+              dKi *= 1.1;
+            } else {
+              // Move to the opposite direction
+              Ki -= 2*dKi;
+              curr_error = pid.TotalError();
+              if (curr_error < best_error) {
+                best_error = curr_error;
+                dKi *= 1.1;
+              } else {
+                Ki += dKi;
+                dKi *= 0.9;
+              }
+            }
+            
+            // Differential            
+            Kd += dKd;
+            curr_error = pid.TotalError();
+            if (curr_error < best_error) {
+              best_error = curr_error;
+              dKd *= 1.1;
+            } else {
+              // Move to the opposite direction
+              Kd -= 2*dKd;
+              curr_error = pid.TotalError();
+              if (curr_error < best_error) {
+                best_error = curr_error;
+                dKd *= 1.1;
+              } else {
+                Kd += dKd;
+                dKd *= 0.9;
+              }
+            }
+            
+            iteration += 1;
+          }
+          
+          steer_value = -best_error;
           std::cout << "Steering Value before bounding: " << steer_value 
                     << std::endl;
           if (steer_value > 1) {
