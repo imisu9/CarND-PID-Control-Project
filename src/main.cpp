@@ -33,7 +33,7 @@ string hasData(string s) {
 int main() {
   uWS::Hub h;
 
-  PID pid;
+  PID pid(0, 0, 0);
   /**
    * TODO: Initialize the pid variable.
    */
