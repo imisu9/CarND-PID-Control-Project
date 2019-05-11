@@ -105,7 +105,10 @@ int main() {
           // Twiddle
           sum_dK = std::accumulate(dK.begin(), dK.end(), 0);
           if (sum_dK > tolerance) {
-            if (iteration < MIN_ITERATION) {
+            if (iteration == 0) {
+              K[idx] += dK[idx];
+              pid.Init(K[P], K[I], K[D]);
+            } else if (iteration < MIN_ITERATION) {
               curr_error += pow(cte, 2.0);
               iteration += 1;
             } else {
@@ -113,8 +116,6 @@ int main() {
               if (curr_trial == FIRST) {
                 if (curr_error < best_error) {
                   best_error = curr_error;
-                  K[idx] += dK[idx];
-                  pid.Init(K[P], K[I], K[D]);
                   dK[idx] *= 1.1;
                   idx += 1;
                   idx %= 3;
@@ -124,13 +125,11 @@ int main() {
                             << "      best_error: " << best_error << std::endl;
                 } else {
                   curr_trial = SECOND;
-                  K[idx] -= dK[idx];
+                  K[idx] -= 2*dK[idx];
                 }
               } else if (curr_trial == SECOND) {
                 if (curr_error < best_error) {
                   best_error = curr_error;
-                  K[idx] += dK[idx];
-                  pid.Init(K[P], K[I], K[D]);
                   dK[idx] *= 1.1;
                   idx += 1;
                   idx %= 3;
@@ -139,8 +138,6 @@ int main() {
                             << "      it succeeded at the SECOND trial."
                             << "      best_error: " << best_error << std::endl;
                 } else {
-                  K[idx] += dK[idx];
-                  pid.Init(K[P], K[I], K[D]);
                   dK[idx] *= 0.9;
                   idx += 1;
                   idx %= 3;
