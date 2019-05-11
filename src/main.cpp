@@ -41,10 +41,11 @@ int main() {
   /**
    * Twiddle variable definition & initialization
    */
-  vector<double> dK(3, 1.0);
-  vector<double> K{0.2, 0.004, 3.0};
   enum Index {P=0, I, D};
   int idx = P;
+  double rate = 0.1;
+  vector<double> K{0.2, 0.004, 3.0};
+  vector<double> dK{K[P]*rate, K[I]*rate, K[D]*rate};
   enum Trial {FIRST=1, SECOND};
   int curr_trial = FIRST;
   double sum_dK = 0.0;
@@ -105,12 +106,12 @@ int main() {
           // Twiddle
           sum_dK = std::accumulate(dK.begin(), dK.end(), 0);
           if (sum_dK > tolerance) {
-            /*if (iteration == 0) {
+            if (iteration == 0) {
               K[idx] += dK[idx];
               pid.Init(K[P], K[I], K[D]);
               curr_error += pow(cte, 2.0);
               iteration += 1;
-            } else */if (iteration < MIN_ITERATION) {
+            } else if (iteration < MIN_ITERATION) {
               curr_error += pow(cte, 2.0);
               iteration += 1;
             } else {
@@ -124,7 +125,7 @@ int main() {
                   
                   std::cout << "##### Update K[" << idx << "] #####" << std::endl;
                   std::cout << "      it succeeded at the FIRST trial." << std::endl;
-                  std::cout << "Kp: " << K[P] << "Ki: " << K[I] << "Kd: " << K[D] << std::endl;
+                  std::cout << "      Kp: " << K[P] << " Ki: " << K[I] << " Kd: " << K[D] << std::endl;
                   std::cout << "      best_error: " << best_error << std::endl;
                 } else {
                   curr_trial = SECOND;
@@ -140,7 +141,7 @@ int main() {
                   
                   std::cout << "##### Update K[" << idx << "] #####" << std::endl;
                   std::cout << "      it succeeded at the SECOND trial." << std::endl;
-                  std::cout << "Kp: " << K[P] << "Ki: " << K[I] << "Kd: " << K[D] << std::endl;
+                  std::cout << "      Kp: " << K[P] << " Ki: " << K[I] << " Kd: " << K[D] << std::endl;
                   std::cout << "      best_error: " << best_error << std::endl;
                 } else {
                   K[idx] += dK[idx];
@@ -151,7 +152,7 @@ int main() {
                   
                   std::cout << "##### Update K[" << idx << "] #####" << std::endl;
                   std::cout << "      it failed at the SECOND trial." << std::endl;
-                  std::cout << "Kp: " << K[P] << "Ki: " << K[I] << "Kd: " << K[D] << std::endl;
+                  std::cout << "      Kp: " << K[P] << " Ki: " << K[I] << " Kd: " << K[D] << std::endl;
                   std::cout << "      best_error: " << best_error << std::endl;
                 }
                 curr_trial = FIRST;
