@@ -105,12 +105,12 @@ int main() {
           // Twiddle
           sum_dK = std::accumulate(dK.begin(), dK.end(), 0);
           if (sum_dK > tolerance) {
-            if (iteration == 0) {
+            /*if (iteration == 0) {
               K[idx] += dK[idx];
               pid.Init(K[P], K[I], K[D]);
               curr_error += pow(cte, 2.0);
               iteration += 1;
-            } else if (iteration < MIN_ITERATION) {
+            } else */if (iteration < MIN_ITERATION) {
               curr_error += pow(cte, 2.0);
               iteration += 1;
             } else {
@@ -122,9 +122,10 @@ int main() {
                   idx += 1;
                   idx %= 3;
                   
-                  std::cout << "##### Update K[" << idx << "] #####"
-                            << "      it succeeded at the FIRST trial."
-                            << "      best_error: " << best_error << std::endl;
+                  std::cout << "##### Update K[" << idx << "] #####" << std::endl;
+                  std::cout << "      it succeeded at the FIRST trial." << std::endl;
+                  std::cout << "Kp: " << K[P] << "Ki: " << K[I] << "Kd: " << K[D] << std::endl;
+                  std::cout << "      best_error: " << best_error << std::endl;
                 } else {
                   curr_trial = SECOND;
                   K[idx] -= 2*dK[idx];
@@ -137,9 +138,10 @@ int main() {
                   idx += 1;
                   idx %= 3;
                   
-                  std::cout << "##### Update K[" << idx << "] #####"
-                            << "      it succeeded at the SECOND trial."
-                            << "      best_error: " << best_error << std::endl;
+                  std::cout << "##### Update K[" << idx << "] #####" << std::endl;
+                  std::cout << "      it succeeded at the SECOND trial." << std::endl;
+                  std::cout << "Kp: " << K[P] << "Ki: " << K[I] << "Kd: " << K[D] << std::endl;
+                  std::cout << "      best_error: " << best_error << std::endl;
                 } else {
                   K[idx] += dK[idx];
                   pid.Init(K[P], K[I], K[D]);
@@ -147,9 +149,10 @@ int main() {
                   idx += 1;
                   idx %= 3;
                   
-                  std::cout << "##### Update K[" << idx << "] #####"
-                            << "      it failed at the SECOND trial."
-                            << "      best_error: " << best_error << std::endl;
+                  std::cout << "##### Update K[" << idx << "] #####" << std::endl;
+                  std::cout << "      it failed at the SECOND trial." << std::endl;
+                  std::cout << "Kp: " << K[P] << "Ki: " << K[I] << "Kd: " << K[D] << std::endl;
+                  std::cout << "      best_error: " << best_error << std::endl;
                 }
                 curr_trial = FIRST;
               } else {
