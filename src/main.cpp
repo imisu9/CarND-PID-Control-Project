@@ -126,6 +126,7 @@ int main() {
                 } else {
                   curr_trial = SECOND;
                   K[idx] -= 2*dK[idx];
+                  pid.Init(K[P], K[I], K[D]);
                 }
               } else if (curr_trial == SECOND) {
                 if (curr_error < best_error) {
@@ -138,6 +139,8 @@ int main() {
                             << "      it succeeded at the SECOND trial."
                             << "      best_error: " << best_error << std::endl;
                 } else {
+                  K[idx] += dK[idx];
+                  pid.Init(K[P], K[I], K[D]);
                   dK[idx] *= 0.9;
                   idx += 1;
                   idx %= 3;
