@@ -4,6 +4,7 @@
 #include <string>
 #include "json.hpp"
 #include "PID.h"
+#include <numeric>
 
 // for convenience
 using nlohmann::json;
@@ -34,10 +35,27 @@ int main() {
   uWS::Hub h;
 
   PID pid;
+  
+  /**
+   * Twiddle variable definition & initialization
+   */
+  vector<double> dK(3, 1.0);
+  vector<double> K{0.2, 0.004, 3.0};
+  enum Index {P=0, I, D};
+  Index idx = P;
+  enum Trial {FIRST=1, SECOND};
+  Trial curr_trial = FIRST;
+  double sum_dK = 0.0;
+  double tolerance = 0.2;  // initialized as shown in the class
+  double best_error = std::numeric_limits<double>::max();
+  double curr_error = 0.0;
+  int MIN_ITERATION = 400;
+  int iteration = 0;
+  
   /**
    * TODO: Initialize the pid variable.
    */
-  pid.Init(0.2, 0.004, 3.0);
+  pid.Init(K[P], K[I], K[D]);
 
   h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                      uWS::OpCode opCode) {
@@ -67,9 +85,10 @@ int main() {
           
           pid.UpdateError(cte);
           steer_value = -pid.TotalError();
-          
+          /**
           std::cout << "Steering Value before bounding: " << steer_value 
                     << std::endl;
+          */     
           if (steer_value > 1) {
             steer_value = 1;
           } else if (steer_value < -1) {
@@ -79,6 +98,57 @@ int main() {
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value 
                     << std::endl;
+          
+          // Twiddle
+          sum_dK = std::accumulate(diff.begin(), diff.end(), 0);
+          if (sum_dK > tolerance) {
+            if (iteration < MIN_ITERATION) {
+              curr_error += pow(cte, 2.0);
+              iteration += 1;
+            } else {
+              curr_error /= MIN_ITERATION;
+              if (curr_trial == FIRST) {
+                if (curr_error < best_error) {
+                  best_error = curr_error;
+                  K[idx] += dK[idx];
+                  pid.Init(K[P], K[I], K[D]);
+                  dK[idx] *= 1.1;
+                  idx += 1;
+                  idx %= 3;
+                } else {
+                  curr_trial = SECOND;
+                  K[idx] -= dK[idx];
+                }
+              } else if (curr_trial == SECOND) {
+                if (curr_error < best_error) {
+                  best_error = curr_error;
+                  K[idx] += dK[idx];
+                  pid.Init(K[P], K[I], K[D]);
+                  dK[idx] *= 1.1;
+                  idx += 1;
+                  idx %= 3;
+                } else {
+                  K[idx] += dK[idx];
+                  pid.Init(K[P], K[I], K[D]);
+                  dK[idx] *= 0.9;
+                  idx += 1;
+                  idx %= 3;
+                }
+                curr_trial = FIRST;
+              } else {
+                // reset to FIRST
+                curr_trial = FIRST;
+              }
+              // reset to iteration for MIN_ITERATION
+              curr_error = 0;
+              iteration = 0;
+            }
+          } else {
+            std::cout << "We have reached to optimal K values."
+                      << "Kp: " << Kp
+                      << "Ki: " << Ki
+                      << "Kd: " << Kd << std::endl;
+          }
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
