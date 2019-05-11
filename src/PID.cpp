@@ -17,6 +17,10 @@ void PID::Init(double Kp_, double Ki_, double Kd_) {
   Ki = Ki_;
   Kd = Kd_;
   
+  std::cout << "===== Kp: " << Kp
+            << ", Ki: " << Ki
+            << ", Kd: " << Kd << " =====" << std::endl;
+
   // Need to figure out how to implement "if needed"
   if (true) {
     p_error = 0.0;
