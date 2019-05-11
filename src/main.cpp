@@ -108,6 +108,8 @@ int main() {
             if (iteration == 0) {
               K[idx] += dK[idx];
               pid.Init(K[P], K[I], K[D]);
+              curr_error += pow(cte, 2.0);
+              iteration += 1;
             } else if (iteration < MIN_ITERATION) {
               curr_error += pow(cte, 2.0);
               iteration += 1;
