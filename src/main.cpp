@@ -101,7 +101,7 @@ int main() {
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value 
                     << std::endl;
-          /*
+          
           // Twiddle
           sum_dK = std::accumulate(dK.begin(), dK.end(), 0);
           if (sum_dK > tolerance) {
@@ -157,6 +157,9 @@ int main() {
               // reset to iteration for MIN_ITERATION
               curr_error = 0;
               iteration = 0;
+              std::string reset_msg = "42[\"reset\",{}]";
+              ws.send(reset_msg.data(), reset_msg.length(), uWS::OpCode::TEXT);
+              return;
             }
           } else {
             std::cout << "We have reached to optimal K values."
@@ -164,7 +167,6 @@ int main() {
                       << "Ki: " << K[I]
                       << "Kd: " << K[D] << std::endl;
           }
-          */
 
           json msgJson;
           msgJson["steering_angle"] = steer_value;
