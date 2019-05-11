@@ -105,6 +105,8 @@ int main() {
           
           // Twiddle
           sum_dK = std::accumulate(dK.begin(), dK.end(), 0);
+          std::cout << "&&&&& sum_dK: " << sum_dK << " #####" << std::endl;
+          std::cout << "      dKp: " << dK[P] << " dKi: " << dK[I] << " dKd: " << dK[D] << std::endl;
           if (sum_dK > tolerance) {
             if (iteration == 0) {
               K[idx] += dK[idx];
