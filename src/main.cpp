@@ -44,9 +44,9 @@ int main() {
   vector<double> dK(3, 1.0);
   vector<double> K{0.2, 0.004, 3.0};
   enum Index {P=0, I, D};
-  Index idx = P;
+  int idx = P;
   enum Trial {FIRST=1, SECOND};
-  Trial curr_trial = FIRST;
+  int curr_trial = FIRST;
   double sum_dK = 0.0;
   double tolerance = 0.2;  // initialized as shown in the class
   double best_error = std::numeric_limits<double>::max();
@@ -103,7 +103,7 @@ int main() {
                     << std::endl;
           
           // Twiddle
-          sum_dK = std::accumulate(diff.begin(), diff.end(), 0);
+          sum_dK = std::accumulate(dK.begin(), dK.end(), 0);
           if (sum_dK > tolerance) {
             if (iteration < MIN_ITERATION) {
               curr_error += pow(cte, 2.0);
@@ -148,9 +148,9 @@ int main() {
             }
           } else {
             std::cout << "We have reached to optimal K values."
-                      << "Kp: " << Kp
-                      << "Ki: " << Ki
-                      << "Kd: " << Kd << std::endl;
+                      << "Kp: " << K[P]
+                      << "Ki: " << K[I]
+                      << "Kd: " << K[D] << std::endl;
           }
 
           json msgJson;
