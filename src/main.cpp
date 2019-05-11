@@ -49,7 +49,7 @@ int main() {
   enum Trial {FIRST=1, SECOND};
   int curr_trial = FIRST;
   double sum_dK = 0.0;
-  double tolerance = 0.2;  // initialized as shown in the class
+  double tolerance = 0.02;  // initialized as shown in the class
   double best_error = std::numeric_limits<double>::max();
   double curr_error = 0.0;
   int MIN_ITERATION = 200;
