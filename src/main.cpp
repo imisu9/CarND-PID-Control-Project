@@ -5,6 +5,7 @@
 #include "json.hpp"
 #include "PID.h"
 #include <numeric>
+#include <vector>
 
 // for convenience
 using nlohmann::json;
