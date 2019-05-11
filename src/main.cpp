@@ -51,7 +51,7 @@ int main() {
   double tolerance = 0.2;  // initialized as shown in the class
   double best_error = std::numeric_limits<double>::max();
   double curr_error = 0.0;
-  int MIN_ITERATION = 400;
+  int MIN_ITERATION = 200;
   int iteration = 0;
   
   /**
