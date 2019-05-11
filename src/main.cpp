@@ -101,7 +101,7 @@ int main() {
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value 
                     << std::endl;
-          /*
+          
           // Twiddle
           sum_dK = std::accumulate(dK.begin(), dK.end(), 0);
           if (sum_dK > tolerance) {
@@ -167,7 +167,7 @@ int main() {
                       << "Ki: " << K[I]
                       << "Kd: " << K[D] << std::endl;
           }
-          */
+          
           json msgJson;
           msgJson["steering_angle"] = steer_value;
           msgJson["throttle"] = 0.3;
