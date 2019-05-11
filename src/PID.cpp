@@ -18,7 +18,7 @@ void PID::Init(double Kp_, double Ki_, double Kd_) {
   Kd = Kd_;
   
   // Need to figure out how to implement "if needed"
-  if (true) {
+  if (false) {
     p_error = 0.0;
     i_error = 0.0;
     d_error = 0.0;
