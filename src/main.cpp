@@ -58,7 +58,8 @@ int main() {
    */
   pid.Init(K[P], K[I], K[D]);
 
-  h.onMessage([&pid](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
+  h.onMessage([&pid, &dK, &K, &idx, &curr_trial, &sum_dK, &tolerance, &best_error, &curr_error, &MIN_ITERATION, &iteration]
+                    (uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                      uWS::OpCode opCode) {
     // "42" at the start of the message means there's a websocket message event.
     // The 4 signifies a websocket message
