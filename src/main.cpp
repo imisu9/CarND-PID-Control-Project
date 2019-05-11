@@ -10,6 +10,7 @@
 // for convenience
 using nlohmann::json;
 using std::string;
+using std::vector;
 
 // For converting back and forth between radians and degrees.
 constexpr double pi() { return M_PI; }
