@@ -104,7 +104,7 @@ int main() {
                     << std::endl;
           
           // Twiddle
-          sum_dK = std::accumulate(dK.begin(), dK.end(), 0);
+          sum_dK = dK[P]+dK[I]+dK[D];
           std::cout << "&&&&& sum_dK: " << sum_dK << " #####" << std::endl;
           std::cout << "      dKp: " << dK[P] << " dKi: " << dK[I] << " dKd: " << dK[D] << std::endl;
           if (sum_dK > tolerance) {
