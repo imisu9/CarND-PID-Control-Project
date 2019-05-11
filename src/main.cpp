@@ -118,6 +118,10 @@ int main() {
                   dK[idx] *= 1.1;
                   idx += 1;
                   idx %= 3;
+                  
+                  std::cout << "##### Update K[" << idx << "] #####"
+                            << "      it succeeded at the FIRST trial."
+                            << "      best_error: " << best_error << std::endl;
                 } else {
                   curr_trial = SECOND;
                   K[idx] -= dK[idx];
@@ -130,12 +134,20 @@ int main() {
                   dK[idx] *= 1.1;
                   idx += 1;
                   idx %= 3;
+                  
+                  std::cout << "##### Update K[" << idx << "] #####"
+                            << "      it succeeded at the SECOND trial."
+                            << "      best_error: " << best_error << std::endl;
                 } else {
                   K[idx] += dK[idx];
                   pid.Init(K[P], K[I], K[D]);
                   dK[idx] *= 0.9;
                   idx += 1;
                   idx %= 3;
+                  
+                  std::cout << "##### Update K[" << idx << "] #####"
+                            << "      it failed at the SECOND trial."
+                            << "      best_error: " << best_error << std::endl;
                 }
                 curr_trial = FIRST;
               } else {
