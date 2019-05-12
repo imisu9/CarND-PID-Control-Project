@@ -96,3 +96,14 @@ still be compilable with cmake and make./
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
 
+## How I did find PID coefficients.
+At first I've set PID coeficients as shown in the class: 0.2, 0.004, 3.0 respectively.
+Then I've set differential terms to each coefficient to one tenth of its original value
+so that change is relative to its starting value.
+Finally I've implemented twiddle as described in the class. Instead of 100 timesteps
+as used in the class, I used 200 timesteps.
+After about an hour run of twiddle, I've obtained the optimal K coefficient values:
+Kp: 0.494146, Ki: 0.000911757, Kd: 5.84615
+
+It was a bit disappointing that these new optimal values do not seem to give better
+driving than the starting values. I still see some jerky maneuver even at the slight coner.
