@@ -108,7 +108,7 @@ int main() {
           std::cout << "&&&&& sum_dK: " << sum_dK << " #####" << std::endl;
           std::cout << "      dKp: " << dK[P] << " dKi: " << dK[I] << " dKd: " << dK[D] << std::endl;
           if (sum_dK > tolerance) {
-            if ((iteration == 0) && (curr_trail == FIRST)) {
+            if ((iteration == 0) && (curr_trial == FIRST)) {
               K[idx] += dK[idx];
               pid.Init(K[P], K[I], K[D]);
               curr_error += pow(cte, 2.0);
