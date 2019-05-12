@@ -44,7 +44,7 @@ int main() {
   enum Index {P=0, I, D};
   int idx = P;
   double rate = 0.1;
-  vector<double> K{0.2, 0.004, 3.0};
+  vector<double> K{0.494146, 0.000911757, 5.84615};
   vector<double> dK{K[P]*rate, K[I]*rate, K[D]*rate};
   enum Trial {FIRST=1, SECOND};
   int curr_trial = FIRST;
@@ -102,7 +102,7 @@ int main() {
           // DEBUG
           std::cout << "CTE: " << cte << " Steering Value: " << steer_value 
                     << std::endl;
-          
+          /*
           // Twiddle
           sum_dK = dK[P]+dK[I]+dK[D];
           std::cout << "&&&&& sum_dK: " << sum_dK << " #####" << std::endl;
@@ -175,7 +175,7 @@ int main() {
                       << "Ki: " << K[I]
                       << "Kd: " << K[D] << std::endl;
           }
-          
+          */
           json msgJson;
           msgJson["steering_angle"] = steer_value;
           msgJson["throttle"] = 0.3;
