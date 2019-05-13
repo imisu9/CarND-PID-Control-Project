@@ -97,6 +97,32 @@ still be compilable with cmake and make./
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
 
 ## How I did find PID coefficients.
+PID in PID controller stands for Proportional, Integral, Derivative. 
+Proportional means set error in proportion to the original error, CTE (Cross Track Error).
+It is implemented in UpdateError() in PID.cpp.
+
+    p_error = cte;
+    
+Integral accumulates error over time. It is implemented in UpdateError() in PID.cpp as well.
+
+    i_error += cte;
+    
+Lastly, D stands for Differential. In other words, it takes the rate of change of the erorr.
+
+    d_error = cte - p_error;
+
+In the above code, **p_error** is CTE at the previous timestep.
+
+Since we're using c++ and messaging, I could not simply reuse what I've done in the class in python.
+In python implementation, we had run() function to obtain error over certain period of time.
+Here, I had to do it with hard stop by sending reset message after pre-defined timesteps.
+
+    std::string reset_msg = "42[\"reset\",{}]";
+    ws.send(reset_msg.data(), reset_msg.length(), uWS::OpCode::TEXT);
+    return;
+
+Init() was utilized to update K coefficents.
+
 At first I've set PID coeficients as shown in the class: 0.2, 0.004, 3.0 respectively.
 Then I've set differential terms to each coefficient to one tenth of its original value
 so that change is relative to its starting value.
